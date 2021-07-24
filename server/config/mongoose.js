@@ -8,7 +8,7 @@ mongoose.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true,
   useNewUrlParser: true
 }, () => {
-  console.log('DATABASE CONNECTED');
+  console.log(`DATABASE CONNECTED TO ${process.env.MONGODB_URI}`);
 });
 
 module.exports = mongoose;
