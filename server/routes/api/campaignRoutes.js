@@ -5,7 +5,7 @@ const ExpressError = require('../../utils/expressError')
 router.post('/', async (req, res)=> {
   console.log(req)
   try {
-    const newCampaign = await Campaign.create({name: "George"});
+    const newCampaign = await Campaign.create(req.body);
     res.status(201).json(newCampaign)
 
   } catch (error) {
@@ -15,9 +15,10 @@ router.post('/', async (req, res)=> {
 })
 
 router.get('/', async (req, res) => {
+  console.log(req.body)
  try {
    const campaigns = await Campaign.find().exec()
-   if (!campaigns) {
+   if (campaigns.length === 0) {
      throw new ExpressError(204, 'No Campaigns Found')
    }
    res.json(campaigns)
