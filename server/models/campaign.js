@@ -9,7 +9,11 @@ const campaignSchema = new Schema({
   sessionNum: {
     type: Number,
     default: 1
-  }
+  },
+  sessions: [{
+    type: Schema.Types.ObjectId,
+    ref: 'CampaignSession'
+  }]
 })
 
 campaignSchema.methods.setSessionNum = () => {
