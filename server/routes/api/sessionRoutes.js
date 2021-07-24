@@ -6,6 +6,7 @@ const ExpressError = require('../../utils/expressError');
 router.post('/', async (req, res) => {
   //create a new instance of Campaign Session
   const newCampaignSession = new CampaignSession(req.body)
+  console.log(newCampaignSession)
   // find campaign
   try {
     //Find Campaign by ID
@@ -16,6 +17,8 @@ router.post('/', async (req, res) => {
     }
     //set the session number using elements found within campaign
     newCampaignSession.sessionNumber = `${campaign.name}-${campaign.sessionNum}`;
+    //push new Campaign Session's id onto the campaign's session array
+    campaign.sessions.push(newCampaignSession._id)
     //attempt to save the session
     const session = await newCampaignSession.save();
     //increment the campaign's session by 1
