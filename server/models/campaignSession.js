@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const { Campaign } = require('./index')
 const Schema = mongoose.Schema;
 const campaignSessionSchema = new Schema({
+  name: {
+    type: String,
+    default: this.sessionNumber
+  },
   sessionNumber: String,
   campaign: {
     type: Schema.Types.ObjectId,
