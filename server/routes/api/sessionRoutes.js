@@ -14,7 +14,13 @@ router.post('/', async (req, res) => {
     newCampaignSession.sessionNumber = `${campaign.name}-${campaign.sessionNum}`;
     const session = await newCampaignSession.save();
     console.log('SESSION', session)
-    res.json(session);
+    campaign.sessionNum = campaign.sessionNum + 1
+    console.log('CAMPAIGN WITH NEW SESSION NUM')
+    const savedCampaign = await campaign.save();
+    res.json({
+      sess: session,
+      campaign: savedCampaign
+    });
   } catch (error) {
     res.json(error)
   }
