@@ -1,0 +1,43 @@
+{
+  "name": "dungeons-and-dragons-app",
+  "version": "1.0.0",
+  "description": "An all in one stop for all your DnD 5e needs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thebadams/dnd-app.git"
+  },
+  "keywords": [
+    "Dungeons",
+    "and",
+    "Dragons",
+    "Role",
+    "Playing",
+    "Games"
+  ],
+  "author": "thebadams",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thebadams/dnd-app/issues"
+  },
+  "homepage": "https://github.com/thebadams/dnd-app#readme",
+  "devDependencies": {
+    "concurrently": "^6.2.0",
+    "eslint": "^7.31.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "if-env": "^1.0.4",
+    "nodemon": "^2.0.12"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.13.3"
+  }
+}
