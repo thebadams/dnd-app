@@ -1,46 +1,50 @@
 const router = require('express').Router();
 const { CampaignSession, Campaign } = require('../../models');
 const ExpressError = require('../../utils/expressError');
-const { startSession } = require('mongoose');
+const mongoose = require('../../config/mongoose');
 //TODO: Figure Out Transactions
 //route to create a new campaign session in the db
 router.post('/', async (req, res) => {
-  //create a new instance of Campaign Session
-  const newCampaignSession = new CampaignSession(req.body)
-  console.log(newCampaignSession)
-  // find campaign
+  const clientSession = await mongoose.createSession();
   try {
-    //create a mongoose session
-    const mongooseSession = await startSession()  
-    //Find Campaign by ID
-    // const campaign = await Campaign.findById(req.body.campaign, {mongooseSession});
-    // if(!campaign){
-    //   //If no Campaign is found with that id, throw an error
-    //   throw new ExpressError(204, 'No Campaign Found With That ID');
-    // }
-    const campaignupdate1 = await Campaign.findByIdAndUpdate(req.body.campaign, {$push: {
-      sessions: newCampaignSession._id
-    }}, {new: true, session: mongooseSession});
+    const campaign = await Campaign.findById(req.body.campaignId, {session: clientSession}).exec()
+    if(!campaign) {
 
-    //set the session number using elements found within campaign
-    newCampaignSession.sessionNumber = `${campaign.name}-${campaign.sessionNum}`;
-    //push new Campaign Session's id onto the campaign's session array
-    // campaign.sessions.push(newCampaignSession._id)
-    //attempt to save the session
-    const session = await newCampaignSession.save();
-    //increment the campaign's session by 1
-    const campaignupdate2 = await campaignupdate1.update({sessionNum: campaignupdate1.sessionNum + 1 })
-    //save the updated campaign to the database
-    const savedCampaign = await campaign.save();
-    //send  back both the created session and the updated campaign as json
-    
-    res.json({
-      sess: session,
-      campaign: savedCampaign
-    });
+    throw new ExpressError(204, 'No Campaign Found With That ID')
+  }
+  const transactionResult = await mongoose.transaction(async (clientSession) => {
+    try {
+      const campaignSessionDoc = {
+      name: req.body.name,
+      sessionNumber: `${campaign.name}-${campaign.sessionNum}`
+    }
+    const newCampaignSession = await CampaignSession.create(campaignSessionDoc, {session: clientSession});
+    if (!newCampaignSession) {
+      throw new Error("The Campaign Session Failed To Be Created")
+    }
+
+    campaign.sessionNum = campaign.sessionNum + 1;
+    campaign.sessions.push(newCampaignSession);
+    const savedCampaign = await campaign.save({session: clientSession})
+    if(!savedCampaign) {
+      throw new Error('The Campaign Failed To Update Correctly')
+    }
+
+    return {
+      savedCampaign,
+      newCampaignSession
+    }
+    } catch (error) {
+      return error
+    }
+  })
+
+  if(transactionResults instanceof Error ) {
+    throw ExpressError(204, 'There was an error!')
+  }
+  res.json(transactionResults)
   } catch (error) {
-    //if there's an error, send it back as json
-    res.json(error)
+    res.json(error);
   }
 })
 
