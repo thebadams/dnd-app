@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { Campaign } = require('./index')
+const { Campaign } = require('./index');
 const Schema = mongoose.Schema;
 const campaignSessionSchema = new Schema({
   sessionName: String,
