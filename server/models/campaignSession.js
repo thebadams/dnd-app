@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
-const { Campaign } = require('./index');
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 const campaignSessionSchema = new Schema({
   sessionName: String,
   date: {
-      type: Date,
-      default: Date.now
-    },
+    type: Date,
+    default: Date.now
+  },
   notes: [{
     type: Schema.Types.ObjectId,
     ref: 'Note',
@@ -14,6 +14,6 @@ const campaignSessionSchema = new Schema({
   }]
 });
 
-const CampaignSession = mongoose.model('CampaignSession', campaignSessionSchema)
+const CampaignSession = mongoose.model('CampaignSession', campaignSessionSchema);
 
 module.exports = CampaignSession;
