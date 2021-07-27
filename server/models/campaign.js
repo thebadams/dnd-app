@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongooseAutoPopulate = require('mongoose-autopopulate');
 
 const Schema = mongoose.Schema;
 const campaignSchema = new Schema({
@@ -12,10 +13,11 @@ const campaignSchema = new Schema({
   },
   sessions: [{
     type: Schema.Types.ObjectId,
-    ref: 'CampaignSession'
+    ref: 'CampaignSession',
+    autopopulate: true
   }]
 })
-
+campaignSchema.plugin(mongooseAutoPopulate);
 campaignSchema.methods.setSessionNum = () => {
   this.sessionNum = this.sessionNum++
 }
