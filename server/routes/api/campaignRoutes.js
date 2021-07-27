@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const { Campaign } = require('../../models')
 const ExpressError = require('../../utils/expressError')
 
-router.post('/', async (req, res)=> {
+router.post('/', async (req, res) => {
   console.log(req)
   try {
     const newCampaign = await Campaign.create(req.body);
