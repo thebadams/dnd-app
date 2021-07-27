@@ -18,6 +18,6 @@ module.exports = {
     'react',
   ],
   rules: {
-    'comma-dangle': 'never'
-  },
+    'comma-dangle': ['warn', 'never']
+  }
 };
