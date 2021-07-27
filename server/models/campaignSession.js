@@ -2,19 +2,11 @@ const mongoose = require('mongoose');
 const { Campaign } = require('./index')
 const Schema = mongoose.Schema;
 const campaignSessionSchema = new Schema({
-  name: {
-    type: String,
-    default: this.sessionNumber
-  },
-  sessionNumber: String,
-  campaign: {
-    type: Schema.Types.ObjectId,
-    ref: "Campaign"
-  },
+  sessionName: String,
   date: {
-    type: Date,
-    default: Date.now
-  }
+      type: Date,
+      default: Date.now
+    }
 })
 
 campaignSessionSchema.methods.setSessionNumber =  (num) => {
