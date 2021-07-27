@@ -9,6 +9,9 @@ mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true
 }, () => {
   console.log(`DATABASE CONNECTED TO ${process.env.MONGODB_URI}`);
+  console.log(mongoose.connection)
 });
+
+
 
 module.exports = mongoose;

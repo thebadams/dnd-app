@@ -18,8 +18,8 @@ const campaignSchema = new Schema({
   }]
 })
 campaignSchema.plugin(mongooseAutoPopulate);
-campaignSchema.methods.setSessionNum = () => {
-  this.sessionNum = this.sessionNum++
+campaignSchema.methods.incrementSessionNum = function () {
+  this.sessionNum = this.sessionNum + 1
 }
 const Campaign = mongoose.model('Campaign', campaignSchema);
 

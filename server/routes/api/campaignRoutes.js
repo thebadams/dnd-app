@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const mongoose = require('mongoose')
 const { Campaign } = require('../../models')
 const ExpressError = require('../../utils/expressError')
 
@@ -16,6 +17,13 @@ router.post('/', async (req, res)=> {
 
 router.get('/', async (req, res) => {
   console.log(req.body)
+  console.log('CONNECTION', mongoose.connection)
+  const clientSession = await mongoose.connection.startSession().then((result)=>{
+    console.log('Connection 2', mongoose.connection)
+    return result
+  })
+  console.log('CLIENT SESSION', clientSession)
+  // console.log('CONNECTION 2', mongoose.connection)
  try {
    const campaigns = await Campaign.find().exec()
    if (campaigns.length === 0) {
