@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { Note, CampaignSession } = require('../../models');
-const ExpressError = require('../../utils/expressError')
+const ExpressError = require('../../utils/expressError');
 
 router.post('/', async (req, res) => {
   try {
@@ -24,4 +24,4 @@ router.post('/', async (req, res) => {
   } catch (error) {
     res.json(error);
   }
-})
+});
